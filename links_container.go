@@ -1,6 +1,6 @@
 package hal
 
-type Links struct {
+type LinksContainer struct {
 	Self Self `json:"self"`
 }
 
@@ -8,8 +8,8 @@ type Self struct {
 	HRef string `json:"href"`
 }
 
-func NewLinks(selfURL string) Links {
-	return Links{
+func NewLinksContainer(selfURL string) LinksContainer {
+	return LinksContainer{
 		Self: Self{
 			HRef: selfURL,
 		},

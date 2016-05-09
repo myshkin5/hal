@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Links", func() {
+var _ = Describe("LinksContainer", func() {
 	var (
 		w widget
 	)
@@ -35,7 +35,7 @@ var _ = Describe("Links", func() {
 	Describe("everything", func() {
 		BeforeEach(func() {
 			w = widget{
-				Links: hal.NewLinks("/widgets/1000"),
+				Links: hal.NewLinksContainer("/widgets/1000"),
 				Color: "blue",
 			}
 		})
@@ -54,6 +54,6 @@ var _ = Describe("Links", func() {
 })
 
 type widget struct {
-	Links hal.Links `json:"_links"`
-	Color string    `json:"color"`
+	Links hal.LinksContainer `json:"_links"`
+	Color string             `json:"color"`
 }

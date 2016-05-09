@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("Embedded", func() {
+var _ = Describe("EmbeddedContainer", func() {
 	var (
 		sWPtr        sprocketWPtr
 		s            sprocket
@@ -22,11 +22,11 @@ var _ = Describe("Embedded", func() {
 			}
 			s = sprocket{
 				Size:     "large",
-				Embedded: hal.NewEmbedded(),
+				Embedded: hal.NewEmbeddedContainer(),
 			}
 			sWOOmitEmpty = sprocketWOOmitEmpty{
 				Size:     "large",
-				Embedded: hal.NewEmbedded(),
+				Embedded: hal.NewEmbeddedContainer(),
 			}
 		})
 
@@ -60,26 +60,26 @@ var _ = Describe("Embedded", func() {
 		BeforeEach(func() {
 			s = sprocket{
 				Size:     "large",
-				Embedded: hal.NewEmbedded(),
+				Embedded: hal.NewEmbeddedContainer(),
 			}
 
 			w1 := widget{
-				Links: hal.NewLinks("/widgets/1000"),
+				Links: hal.NewLinksContainer("/widgets/1000"),
 				Color: "blue",
 			}
 			w2 := widget{
-				Links: hal.NewLinks("/widgets/1001"),
+				Links: hal.NewLinksContainer("/widgets/1001"),
 				Color: "red",
 			}
 			s.Embedded.AppendList("widget", []interface{}{w1, w2})
 
 			f1 := widget{
-				Links: hal.NewLinks("/fidgets/2000"),
+				Links: hal.NewLinksContainer("/fidgets/2000"),
 				Color: "neon",
 			}
 			s.Embedded.Append("fidget", f1)
 			f2 := widget{
-				Links: hal.NewLinks("/fidgets/2001"),
+				Links: hal.NewLinksContainer("/fidgets/2001"),
 				Color: "heliotrope",
 			}
 			s.Embedded.Append("fidget", f2)
@@ -126,16 +126,16 @@ var _ = Describe("Embedded", func() {
 })
 
 type sprocketWPtr struct {
-	Size     string        `json:"size"`
-	Embedded *hal.Embedded `json:"_embedded,omitempty"`
+	Size     string                 `json:"size"`
+	Embedded *hal.EmbeddedContainer `json:"_embedded,omitempty"`
 }
 
 type sprocket struct {
-	Size string `json:"size"`
-	Embedded hal.Embedded `json:"_embedded,omitempty"`
+	Size     string                `json:"size"`
+	Embedded hal.EmbeddedContainer `json:"_embedded,omitempty"`
 }
 
 type sprocketWOOmitEmpty struct {
-	Size     string       `json:"size"`
-	Embedded hal.Embedded `json:"_embedded"`
+	Size     string                `json:"size"`
+	Embedded hal.EmbeddedContainer `json:"_embedded"`
 }

@@ -34,8 +34,13 @@ var _ = Describe("LinksContainer", func() {
 
 	Describe("everything", func() {
 		BeforeEach(func() {
+			links := hal.NewLinksContainer("/widgets/1000")
+			links.AddSimpleRelation("sprockets", hal.NewLink("/sprockets"))
+			links.AddRelation("admin", []hal.Link{
+				hal.NewLink("/admins/2").SetTitle("Fred"),
+				hal.NewLink("/admins/5").SetTitle("Kate")})
 			w = widget{
-				Links: hal.NewLinksContainer("/widgets/1000"),
+				Links: links,
 				Color: "blue",
 			}
 		})
@@ -45,7 +50,15 @@ var _ = Describe("LinksContainer", func() {
 			Expect(err).NotTo(HaveOccurred())
 			Expect(data).To(MatchJSON(`{
 				"_links": {
-					"self": { "href": "/widgets/1000" }
+					"self": { "href": "/widgets/1000" },
+					"sprockets": { "href": "/sprockets" },
+					"admin": [{
+						"href": "/admins/2",
+						"title": "Fred"
+					}, {
+						"href": "/admins/5",
+						"title": "Kate"
+					}]
 				},
 				"color": "blue"
 			}`))
